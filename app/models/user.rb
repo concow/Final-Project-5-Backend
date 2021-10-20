@@ -1,9 +1,8 @@
 class User < ApplicationRecord
+    has_secure_password
     has_many :orders
     has_many :stocks, through: :orders
+    validates :username, uniqueness: { case_sensitive: false }
 
-    validates :username, uniqueness: true
-
-    has_secure_password
 
 end
