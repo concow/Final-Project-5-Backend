@@ -1,10 +1,10 @@
 class UsersController < ApplicationController
  skip_before_action :authorized, only: [:create]
  
- def profile
-   render json: { user: UserSerializer.new(current_user) }, status: :accepted
- end
- ``
+  def profile
+    render json: { user: UserSerializer.new(current_user) }, status: :accepted
+  end
+ 
   def index
     users = User.all
     render json: users
@@ -20,11 +20,11 @@ class UsersController < ApplicationController
       render json: { error: 'failed to create user' }, status: :unprocessable_entity
     end
   end
-
+ 
   private
   
   def user_params
-    params.require(:user).permit(:username, :email, :password, :user_balance)
+    params.require(:user).permit(:username, :email, :password, :password_confirmation)
   end
 end
 

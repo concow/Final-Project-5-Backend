@@ -2,7 +2,8 @@ class StocksController < ApplicationController
 
 
 def index
-    render json: Stock.all
+    stocks = Stock.all
+    render json: stocks
 end
 
 def show
