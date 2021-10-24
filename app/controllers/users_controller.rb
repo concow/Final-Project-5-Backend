@@ -10,9 +10,9 @@ class UsersController < ApplicationController
     render json: users
   end
 
-
   def create
     @user = User.create(user_params)
+    #  byebug
     if @user.valid?
       @token = encode_token(user_id: @user.id)
       render json: { user: UserSerializer.new(@user), jwt: @token }, status: :created
@@ -24,15 +24,6 @@ class UsersController < ApplicationController
   private
   
   def user_params
-    params.require(:user).permit(:username, :email, :password, :password_confirmation)
+    params.require(:user).permit(:username, :password)
   end
 end
-
-  # def show
-  #     user = User.find_by(id: params[:id])
-  #   if user
-  #       render json: user
-  #   else
-  #       error_not_found
-  #   end
-  # end

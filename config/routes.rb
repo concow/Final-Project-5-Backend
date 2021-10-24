@@ -1,26 +1,13 @@
 Rails.application.routes.draw do
-  # resources :stocks
-  resources :orders
   resources :users, only: [:create]
+  resources :stocks
+  # resources :orders
 
-  # post '/users', to: 'users#create'
   post '/login', to: 'auth#create'
-  post "/auto_login", to: "auth#auto_login"
+  get '/profile', to: 'users#profile'
   get '/logged_in', to: 'application#logged_in?'
-  get '/stocks', to: 'stocks#index'
-  
-
-  # get '/profile', to: 'users#profile'
+  post '/auto_login', to: 'auth#auto_login'
+  # post '/users', to: 'users#create'
+  # get '/stocks', to: 'stocks#index'
   # get '/me', to: 'users#show'
 end
-
-
-# Rails.application.routes.draw do
-#   namespace :api do
-#     namespace :v1 do
-#       resources :users, only: [:create]
-#       post '/login', to: 'auth#create'
-#       get '/profile', to: 'users#profile'
-#     end
-#   end
-# end
