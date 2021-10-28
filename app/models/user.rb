@@ -3,5 +3,4 @@ class User < ApplicationRecord
     has_many :orders
     has_many :stocks, through: :orders
     validates :username, uniqueness: { case_sensitive: false }
-    
 end

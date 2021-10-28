@@ -1,4 +1,7 @@
 class OrdersController < ApplicationController
+    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
+    skip_before_action :authorized
 
     def index   
         render json: Order.all   
@@ -15,16 +18,21 @@ class OrdersController < ApplicationController
 
     def create
         order = Order.create!(order_params)
-        if order.valid?
-            render json: order, status: :created
-        else 
-          render json: { error: order.errors.full_messages }, status: :unprocessable_entity
-        end
+        # byebug
+        render json: order, status: :created
     end
 
   private
 
-  def order_params  
-    params.permit(:quantity, :order_total)
-  end
+    def order_params  
+       #params.permit(:quantity, :order_total)
+        params.permit(:user_id, :quantity, :price, :company, :order)
+    end
+    def render_unprocessable_entity_response(exception)
+        render json: { errors: exception.record.errors.full_messages }, status: :unprocessable_entity 
+    end
+
+    def render_not_found_response
+        render json: { error: "Order not found" }, status: :not_found 
+    end 
 end

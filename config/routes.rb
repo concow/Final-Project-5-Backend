@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :users, only: [:create]
   resources :stocks
-  # resources :orders
+  resources :orders
 
   post '/login', to: 'auth#create'
   get '/profile', to: 'users#profile'
